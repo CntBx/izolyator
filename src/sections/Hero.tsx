@@ -19,19 +19,19 @@ export default function Hero() {
       md:col-span-7 — блок растягивается аккурат на 7 колонок, оставляя место под картинку справа.
       max-w-2xl — сохраняем ограничение по ширине для красоты строк текста.
     */}
-          <div className="max-w-2xl md:col-span-7 md:col-start-2 lg:max-w-3xl">
+          <div className="max-w-2xl md:col-span-7 md:col-start-2 lg:max-w-3xl 2xl:flex 2xl:flex-col 2xl:gap-10">
             {/* Маленький надзаголовок */}
-            <span className="mb-4 block text-sm leading-relaxed font-medium tracking-widest text-gray-400 uppercase md:mb-6 md:text-[16px]">
+            <span className="mb-4 block text-sm leading-relaxed font-medium tracking-widest text-gray-400 uppercase md:mb-6 md:text-[19px]">
               Российское производство <br /> высоковольтного оборудования
             </span>
 
             {/* Главный заголовок с адаптивным размером шрифта */}
-            <h1 className="font-sans text-3xl leading-tight font-black tracking-tight uppercase sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl">
+            <h1 className="font-sans text-3xl font-extrabold tracking-normal uppercase sm:text-4xl md:text-4xl lg:text-[48px] xl:text-[48px]">
               Энергия будущего. <br /> основа надежных решений
             </h1>
 
             {/* Подзаголовок-описание */}
-            <p className="mt-6 max-w-md font-sans text-sm leading-relaxed font-light text-gray-300 md:max-w-lg md:text-base">
+            <p className="mt-6 max-w-md font-sans text-[16px] leading-relaxed font-light text-gray-300 md:max-w-lg md:text-[24px]">
               Высоковольтные вводы 10-1150 кВ, кабельная арматура 110-500 кВ и полные композитные
               изоляторы
             </p>

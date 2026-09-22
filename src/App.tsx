@@ -1,8 +1,9 @@
-import { useState, type UIEvent} from "react";
+import { useState, type UIEvent } from "react";
 import Header from "./components/layout/Header";
 import Competences from "./sections/Competences";
 import Hero from "./sections/Hero";
 import Scale from "./sections/Scale";
+import Products from "./sections/Products";
 
 function App() {
   const [activePageIndex, setActivePageIndex] = useState(0);
@@ -44,6 +45,9 @@ function App() {
       </div>
       <div id="competences">
         <Competences />
+      </div>
+      <div id="products">
+        <Products />
       </div>
     </div>
   );

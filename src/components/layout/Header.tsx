@@ -1,5 +1,6 @@
 import { Phone } from "lucide-react";
 import star_izo from "../../assets/Star-izo.svg";
+import star_izo_dark from "../../assets/Star-izo-dark.svg";
 
 interface HeaderProps {
   activePageIndex: number;
@@ -29,7 +30,7 @@ export default function Header({ activePageIndex }: HeaderProps) {
           className="flex cursor-pointer items-center gap-3 text-xl font-black tracking-wider"
           onClick={() => scrollToSection("hero")}
         >
-          <img src={star_izo} className="h-10 w-10 object-contain" />
+          <img src={isHeroActive ? star_izo : star_izo_dark} className="h-10 w-10 object-contain" />
           {/* Добавили leading-none, чтобы строки текста не наезжали друг на друга */}
           <p className="leading-none">
             <span className="text-[11px] font-medium tracking-normal text-gray-400">
@@ -43,27 +44,43 @@ export default function Header({ activePageIndex }: HeaderProps) {
         <nav className="hidden space-x-8 text-[18px] font-medium md:flex">
           <button
             onClick={() => scrollToSection("hero")}
+            /* 
+      Мы убрали font-bold из условий! Теперь кнопка не дергается по ширине. 
+      Если мы на Hero — текст белый, если скроллим — text-factory-blue.
+    */
             className={`cursor-pointer transition-colors hover:opacity-70 ${
               activePageIndex === 0
                 ? isHeroActive
-                  ? "border-b-2 border-white font-bold text-white"
-                  : "text-factory-blue font-bold"
-                : ""
+                  ? "border-b-2 border-white text-white"
+                  : "text-factory-blue"
+                : "text-gray-400" /* Цвет неактивного пункта, когда мы на других страницах */
             }`}
           >
             Главная
           </button>
           <button
             onClick={() => scrollToSection("scale")}
-            className={`cursor-pointer transition-colors hover:opacity-70 ${activePageIndex === 1 ? "font-bold text-[#011A34]" : ""}`}
+            className={`cursor-pointer transition-colors hover:opacity-70 ${
+              activePageIndex === 1 ? "text-[#011A34]" : "text-gray-400"
+            }`}
           >
             Масштаб
           </button>
           <button
             onClick={() => scrollToSection("competences")}
-            className={`cursor-pointer transition-colors hover:opacity-70 ${activePageIndex === 2 ? "font-bold text-[#011A34]" : ""}`}
+            className={`cursor-pointer transition-colors hover:opacity-70 ${
+              activePageIndex === 2 ? "text-[#011A34]" : "text-gray-400"
+            }`}
           >
             Компетенции
+          </button>
+          <button
+            onClick={() => scrollToSection("products")}
+            className={`cursor-pointer transition-colors hover:opacity-70 ${
+              activePageIndex === 3 ? "text-[#011A34]" : "text-gray-400"
+            }`}
+          >
+            Продукция
           </button>
         </nav>
 

@@ -3,19 +3,25 @@
 @theme {
   /* Фирменные цвета завода */
   --color-factory-dark-blue: #001a34; /* Фон 1-го экрана */
-  --color-factory-navy: #0a2540;      /* Заголовки */
-  --color-factory-blue: #003f98;      /* Акцентный синий (кнопки) */
-  --color-factory-gray: #667085;      /* Текст описаний */
-  
-  /* Шрифты (если у завода используется Inter, система подтянет его) */
-  --font-sans: "Inter", "sans-serif";
+  --color-factory-navy: #0a2540; /* Заголовки */
+  --color-factory-blue: #003f98; /* Акцентный синий (кнопки) */
+  --color-factory-gray: #667085; /* Текст описаний */
+
+  /* Перезаписываем стандартный шрифт Tailwind на Manrope */
+  --font-sans: "Manrope", "sans-serif";
 }
 
 @utility no-scrollbar {
-  -ms-overflow-style: none;  /* IE и Edge */
-  scrollbar-width: none;  /* Firefox */
-  
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari и Opera */
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
   }
 }
