@@ -30,7 +30,7 @@ export default function Details() {
 
   return (
     <section 
-      id="competences" 
+      id="details" 
       className="relative flex min-h-screen w-full snap-start items-center justify-center bg-[#010A15] px-6 pt-20 pb-0 text-white md:h-screen md:px-16 overflow-hidden"
     >
       

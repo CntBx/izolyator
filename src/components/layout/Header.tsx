@@ -5,9 +5,11 @@ import star_izo_dark from "../../assets/Star-izo-dark.svg";
 interface HeaderProps {
   activePageIndex: number;
   isMobileWhiteHeader: boolean;
+  view: "landing" | "catalog" | "product";
+  setView: (view: "landing" | "catalog" | "product") => void; // Тип для функции изменения стейта
 }
 
-export default function Header({ activePageIndex }: HeaderProps) {
+export default function Header({ activePageIndex, view, setView }: HeaderProps) {
   // Массив индексов ТЁМНЫХ страниц (сейчас это только второй слайд — Масштаб)
   const darkPages = [1, 4];
 
@@ -15,9 +17,16 @@ export default function Header({ activePageIndex }: HeaderProps) {
   const isDarkPageActive = darkPages.includes(activePageIndex);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    // Если пользователь находится в каталоге, а нажимает на кнопку лендинга (например, "О группе")
+    // мы сначала возвращаем его на лендинг, а затем плавно скроллим к разделу
+    if (view !== "landing") {
+      setView("landing");
+      // Небольшой таймаут, чтобы React успел отрендерить лендинг перед скроллом
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -38,7 +47,10 @@ export default function Header({ activePageIndex }: HeaderProps) {
         {/* ЛОГОТИП */}
         <div
           className="flex cursor-pointer items-center gap-3 text-xl font-black tracking-wider"
-          onClick={() => scrollToSection("hero")}
+          onClick={() => {
+            setView("landing");
+            scrollToSection("hero");
+          }}
         >
           {/* На тёмной странице — БЕЛАЯ звезда, на светлой (включая Главную) — ТЁМНАЯ звезда */}
           <img
@@ -58,15 +70,12 @@ export default function Header({ activePageIndex }: HeaderProps) {
         {/* НАВИГАЦИЯ */}
         <nav className="hidden space-x-8 text-[18px] font-medium md:flex">
           <button
-            onClick={() => scrollToSection("hero")}
+            onClick={() => {
+              setView("landing");
+              scrollToSection("hero");
+            }}
             /* Подсветка активных пунктов теперь учитывает тему страницы */
-            className={`cursor-pointer transition-colors hover:opacity-70 ${
-              activePageIndex === 0
-                ? "text-factory-blue font-bold"
-                : isDarkPageActive
-                  ? "text-white/60"
-                  : "text-gray-400"
-            }`}
+            className={`cursor-pointer ${activePageIndex === 0 ? "text-factory-blue font-bold" : "text-gray-400"}`}
           >
             Главная
           </button>
@@ -96,6 +105,7 @@ export default function Header({ activePageIndex }: HeaderProps) {
           </button>
           <button
             onClick={() => scrollToSection("products")}
+            // onClick={() => setView("catalog")}
             className={`cursor-pointer transition-colors hover:opacity-70 ${
               activePageIndex === 3
                 ? "text-factory-blue font-bold"

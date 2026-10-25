@@ -3,7 +3,11 @@ import { ArrowRight, ArrowDown } from "lucide-react";
 import product_1 from "../assets/Product_1.svg";
 import product_2 from "../assets/Product_2.svg";
 
-export default function Products() {
+interface ProductsProps {
+  setView: (view: "landing" | "catalog") => void;
+}
+
+export default function Products({ setView }: ProductsProps) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   // Полная база данных по продукции в точности по макету
@@ -18,7 +22,7 @@ export default function Products() {
         { label: "НАПРЯЖЕНИЕ", value: "20–1150 кВ" },
         { label: "ПРИМЕНЕНИЕ", value: "Трансформаторы, реакторы, выключатели" },
         { label: "ИЗОЛЯЦИЯ", value: "полимерная покрышка" },
-      ]
+      ],
     },
     {
       id: "02",
@@ -30,7 +34,7 @@ export default function Products() {
         { label: "НАПРЯЖЕНИЕ", value: "110–500 кВ" },
         { label: "ПРИМЕНЕНИЕ", value: "Подземные кабельные трассы, подстанции" },
         { label: "ИЗОЛЯЦИЯ", value: "сшитый полиэтилен / XLPE" },
-      ]
+      ],
     },
     {
       id: "03",
@@ -42,38 +46,38 @@ export default function Products() {
         { label: "НАПРЯЖЕНИЕ", value: "35–1150 кВ" },
         { label: "ПРИМЕНЕНИЕ", value: "Трансформаторы тока, измерительные приборы" },
         { label: "ИЗОЛЯЦИЯ", value: "силиконовое оребрение" },
-      ]
-    }
+      ],
+    },
   ];
 
   const current = catalog[activeIdx];
 
   return (
-    <section id="products" className="relative flex min-h-screen w-full snap-start items-center justify-center bg-[#F8F9FA] px-6 py-12 text-[#011A34] md:h-screen md:px-16 md:py-0 overflow-hidden">
-      
-      <div className="relative z-10 mx-auto w-full max-w-7xl h-full flex flex-col justify-between md:pt-24 md:pb-6">
-        
+    <section
+      id="products"
+      className="relative flex min-h-screen w-full snap-start items-center justify-center overflow-hidden bg-[#F8F9FA] px-6 py-12 text-[#011A34] md:h-screen md:px-16 md:py-0"
+    >
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-between md:pt-24 md:pb-6">
         {/* ВЕРХНИЙ СЧЕТЧИК СЛАЙДОВ (04 / 08) */}
         <div className="absolute top-20 right-0 font-sans text-xs font-bold tracking-widest text-gray-400">
           04 / <span className="text-gray-300">08</span>
         </div>
 
         {/* ГЛАВНАЯ 12-КОЛОНОЧНАЯ СЕТКА */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-center w-full my-auto">
-          
+        <div className="my-auto grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-12">
           {/* 1. ЛЕВАЯ КОЛОНКА: Заголовок + Вертикальное меню табов (4 колонки из 12) */}
-          <div className="md:col-start-2 md:col-span-4 flex flex-col justify-between h-auto py-2">
+          <div className="flex h-auto flex-col justify-between py-2 md:col-span-4 md:col-start-2">
             <div>
-              <span className="text-[11px] font-bold tracking-widest uppercase text-factory-blue block mb-2 md:mb-3">
+              <span className="text-factory-blue mb-2 block text-[11px] font-bold tracking-widest uppercase md:mb-3">
                 04 / ПРОДУКЦИЯ
               </span>
-              <h2 className="font-sans text-2xl font-black uppercase tracking-tight sm:text-3xl lg:text-[38px] xl:text-[44px] leading-[1.05] text-[#011A34] max-w-sm">
+              <h2 className="max-w-sm font-sans text-2xl leading-[1.05] font-black tracking-tight text-[#011A34] uppercase sm:text-3xl lg:text-[38px] xl:text-[44px]">
                 {current.mainTitle}
               </h2>
             </div>
 
             {/* ТАБЫ-ПЕРЕКЛЮЧАТЕЛИ ( py-3.5 на ноутах под высоту 768px) */}
-            <div className="mt-8 md:mt-16 flex flex-col gap-1 border-l border-gray-200/60 pl-0">
+            <div className="mt-8 flex flex-col gap-1 border-l border-gray-200/60 pl-0 md:mt-16">
               {catalog.map((item, index) => {
                 const isActive = activeIdx === index;
                 return (
@@ -81,14 +85,14 @@ export default function Products() {
                     key={item.id}
                     onClick={() => setActiveIdx(index)}
                     /* -ml-[1.5px] накладывает синюю линию активного таба ровно поверх серой оси */
-                    className={`flex items-baseline gap-4 py-3 text-left cursor-pointer border-l-2 transition-all duration-300 pl-4 -ml-[1px] ${
-                      isActive 
-                        ? "border-[#003F98] text-[#011A34] font-bold" 
-                        : "border-transparent text-gray-400 font-medium hover:text-[#011A34]"
+                    className={`-ml-px flex cursor-pointer items-baseline gap-4 border-l-2 py-3 pl-4 text-left transition-all duration-300 ${
+                      isActive
+                        ? "border-factory-blue font-bold text-[#011A34]"
+                        : "border-transparent font-medium text-gray-400 hover:text-[#011A34]"
                     }`}
                   >
-                    <span className="text-[10px] tracking-wider font-bold">{item.id}</span>
-                    <span className="text-sm md:text-base tracking-tight">{item.title}</span>
+                    <span className="text-[10px] font-bold tracking-wider">{item.id}</span>
+                    <span className="text-sm tracking-tight md:text-base">{item.title}</span>
                   </button>
                 );
               })}
@@ -96,47 +100,45 @@ export default function Products() {
           </div>
 
           {/* 2. ЦЕНТРАЛЬНАЯ КОЛОНКА: Картинка изолятора + Огромная цифра на бэке (4 колонки из 12) */}
-          <div className="lg:col-span-4 flex items-center justify-center relative h-[380px] md:h-[520px] 2xl:h-[620px] overflow-visible">
-            
+          <div className="relative flex h-95 items-center justify-center overflow-visible md:h-130 lg:col-span-4 2xl:h-155">
             {/* ОГРОМНЫЙ НОМЕР НА ЗАДНЕМ ПЛАНЕ */}
-            <div className="absolute inset-0 flex items-center justify-center select-none font-sans text-[20vw] md:text-[24rem] font-black leading-none text-gray-200/50 z-0 tracking-tighter">
+            <div className="absolute inset-0 z-0 flex items-center justify-center font-sans text-[20vw] leading-none font-black tracking-tighter text-gray-200/50 select-none md:text-[24rem]">
               {current.id}
             </div>
 
             {/* Картинка самого изолятора */}
-            <img 
-              src={current.image} 
-              alt={current.title} 
-              className="relative z-10 h-full max-h-[340px] md:max-h-[460px] 2xl:max-h-[580px] w-auto object-contain drop-shadow-2xl transition-all duration-500 transform scale-100"
+            <img
+              src={current.image}
+              alt={current.title}
+              className="relative z-10 h-full max-h-85 w-auto scale-100 transform object-contain drop-shadow-2xl transition-all duration-500 md:max-h-115 2xl:max-h-145"
             />
           </div>
 
           {/* 3. ПРАВАЯ КОЛОНКА: Описание категории + Таблица параметров + Кнопки (4 колонки из 12) */}
-          <div className="lg:col-span-3 flex flex-col justify-center w-full lg:pl-4">
-            
+          <div className="flex w-full flex-col justify-center lg:col-span-3 lg:pl-4">
             {/* Заголовок категории и мини-счетчик */}
-            <div className="flex justify-between items-baseline border-b border-gray-200/80 pb-2 mb-4">
+            <div className="mb-4 flex items-baseline justify-between border-b border-gray-200/80 pb-2">
               <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
                 {current.id} / 03
               </span>
             </div>
 
-            <h3 className="font-sans text-xl font-black tracking-tight text-[#011A34] uppercase leading-tight">
+            <h3 className="font-sans text-xl leading-tight font-black tracking-tight text-[#011A34] uppercase">
               {current.title}
             </h3>
 
-            <p className="mt-3 font-sans text-xs md:text-sm font-normal leading-relaxed text-gray-500">
+            <p className="mt-3 font-sans text-xs leading-relaxed font-normal text-gray-500 md:text-sm">
               {current.desc}
             </p>
 
             {/* ТЕХНИЧЕСКАЯ ТАБЛИЦА ХАРАКТЕРИСТИК */}
-            <div className="mt-6 flex flex-col gap-3 font-sans text-xs border-t border-b border-gray-200/60 py-4">
+            <div className="mt-6 flex flex-col gap-3 border-t border-b border-gray-200/60 py-4 font-sans text-xs">
               {current.specs.map((spec) => (
-                <div key={spec.label} className="grid grid-cols-3 gap-2 items-baseline">
-                  <span className="text-[9px] font-bold tracking-wider text-gray-400 uppercase col-span-1">
+                <div key={spec.label} className="grid grid-cols-3 items-baseline gap-2">
+                  <span className="col-span-1 text-[9px] font-bold tracking-wider text-gray-400 uppercase">
                     {spec.label}
                   </span>
-                  <span className="text-gray-900 font-medium leading-tight col-span-2 text-right sm:text-left">
+                  <span className="col-span-2 text-right leading-tight font-medium text-gray-900 sm:text-left">
                     {spec.value}
                   </span>
                 </div>
@@ -144,29 +146,28 @@ export default function Products() {
             </div>
 
             {/* КНОПКИ ДЕЙСТВИЯ (Компактный размер py-3 под экран ноутбука) */}
-            <div className="mt-6 flex flex-col gap-2 w-full">
-              <button className="flex items-center justify-between rounded-md bg-[#011A34] px-5 py-3 text-[10px] font-bold tracking-widest text-white uppercase transition-colors hover:bg-[#003F98] cursor-pointer">
+            <div className="mt-6 flex w-full flex-col gap-2">
+              <button
+                onClick={() => setView("catalog")}
+                className="flex cursor-pointer items-center justify-between rounded-md bg-[#011A34] px-5 py-3 text-[10px] font-bold tracking-widest text-white uppercase transition-colors hover:bg-factory-blue"
+              >
                 <span>Подробнее</span>
                 <ArrowRight size={14} />
               </button>
-              
-              <button className="flex items-center justify-between rounded-md border border-gray-200 bg-white px-5 py-3 text-[10px] font-bold tracking-widest text-[#011A34] uppercase transition-colors hover:bg-gray-50 cursor-pointer">
+
+              <button className="flex cursor-pointer items-center justify-between rounded-md border border-gray-200 bg-white px-5 py-3 text-[10px] font-bold tracking-widest text-[#011A34] uppercase transition-colors hover:bg-gray-50">
                 <span>Скачать каталог</span>
                 <ArrowDown size={14} />
               </button>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );
 }
 
-
-
-// --- СТАРЫЙ ВАРИАНТ --- 
+// --- СТАРЫЙ ВАРИАНТ ---
 // import { useState } from "react";
 // import product_1 from "../assets/Product_1.svg";
 // import product_2 from "../assets/Product_2.svg";
